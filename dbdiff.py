@@ -12,7 +12,7 @@ import os
 import time
 import subprocess
 from argparse import ArgumentParser, SUPPRESS, Namespace
-from db import DatabaseFile, EpicsDatabase, EpicsMacro, FILTER_RECORD
+from db import DatabaseFile, EpicsDatabase, EpicsMacro, FILTER_RECORD, FILTER_FIELD
 
 # Indentation used when printing differences
 FIRST_INDENT = ' ' * 2
@@ -44,12 +44,13 @@ def diff_filter(what, name, attribute):
     :type name: str
     :param attribute: record type or field value
     :type attribute: str
-    :return:
+    :return: tuple containing the filtered name and attribute
+    :rtype tuple
     """
     if what == FILTER_RECORD:
         output_name = name if diff_macros is None else diff_macros.replace_macros(name)
         return output_name.strip(), attribute.strip()
-    else:
+    elif what == FILTER_FIELD:
         output_attr = attribute if diff_macros is None else diff_macros.replace_macros(attribute)
         output_attr = output_attr.replace('.NPP', 'NPP')
         output_attr = output_attr.replace('.PP', 'PP')
@@ -57,11 +58,15 @@ def diff_filter(what, name, attribute):
         output_attr = output_attr.replace('.CP', 'CP')
         output_attr = output_attr.replace('.NMS', ' NMS')
         output_attr = output_attr.replace('.MS', ' MS')
-        if name == 'DESC':  # DESC field cases
+        # Handle description differences between different versions of EPICS
+        if name == 'DESC':
             output_attr = output_attr.replace('Gemini ', '')
             output_attr = output_attr.replace('status record', 'Status Record')
         # output_attr = output_attr.replace('Gemini Status Record', 'status record')
         return name.strip(), output_attr.strip()
+    else:
+        # this should never happen
+        raise(ValueError, 'Unknown what to filter value')
 
 
 def print_only_in_one(record_name_list, file_name):
@@ -345,7 +350,7 @@ def get_args(argv):
     :param argv: command line arguments from sys.argv
     :type argv: list
     :return: arguments
-    :rtype: argparse.Namespace
+    :rtype: Namespace
     """
 
     parser = ArgumentParser()
