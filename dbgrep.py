@@ -25,7 +25,7 @@ The following rules are used when matching:
 """
 import sys
 import re
-from argparse import ArgumentParser, SUPPRESS
+from argparse import ArgumentParser, SUPPRESS, Namespace
 from files import process_file_list
 from db import DatabaseFile, EpicsRecord
 from db import format_record_start, format_record_end, format_field
@@ -66,7 +66,7 @@ def grep_file(f, file_name, p_args):
     :param f: database file
     :param file_name: database file name
     :param p_args: command line arguments
-    :type p_args: object
+    :type p_args: Namespace
     """
 
     # Print debug information
@@ -194,7 +194,7 @@ def get_args(argv):
     :param argv: command line arguments from sys.argv
     :type argv: list
     :return: arguments
-    :rtype: argparse.Namespace
+    :rtype: Namespace
     """
     epilog_text = """The standard input is used if no input files are specified.""" + \
                   """ The program will look for matches in the record name, record type,""" + \
