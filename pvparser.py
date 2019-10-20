@@ -316,9 +316,9 @@ class PvParser:
 
     def trace(self, text):
         """
-        Routine used to print a lot of details about the program execution.
+        Routine used to print details about the program execution.
         Used extensively during the implementation and testing of the parser.
-        Trace is enabled at run time by the --debug option.
+        Trace is enabled at object creation time.
         :param text: text to print
         :return: None
         """
