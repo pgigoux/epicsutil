@@ -6,7 +6,7 @@ The standard input is used if no files are specified.
 The records are listed in the same order as they appear in the database file.
 """
 import sys
-from argparse import ArgumentParser, SUPPRESS
+from argparse import ArgumentParser, SUPPRESS, Namespace
 from files import process_file_list
 from db import DatabaseFile
 
@@ -42,7 +42,7 @@ def get_args(argv):
     :param argv: command line arguments from sys.argv
     :type argv: list
     :return: arguments
-    :rtype: argparse.Namespace
+    :rtype: Namespace
     """
 
     parser = ArgumentParser(epilog='The standard input is used if no files are supplied')
