@@ -4,7 +4,7 @@ Extract state set and state information from an SNL file and print it in differe
 """
 import sys
 import re
-from argparse import ArgumentParser, SUPPRESS
+from argparse import ArgumentParser, SUPPRESS, Namespace
 from files import process_file_list
 
 # Number of spaces used to indent output in graph output
@@ -227,7 +227,6 @@ def print_as_text(state_set_list):
             for reference in state.reference_list:
                 print('      ', reference)
         print()
-    return
 
 
 def write_as_digraph(f_out, state_set_list):
@@ -331,7 +330,7 @@ def get_args(argv):
     :param argv: command line arguments from sys.argv
     :type argv: list
     :return: arguments
-    :rtype: argparse.Namespace
+    :rtype: Namespace
     """
 
     parser = ArgumentParser(epilog='The standard input is used if no input files are supplied')
