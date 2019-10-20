@@ -57,7 +57,7 @@ def list_directory(directory='.', skip_directories=True):
     if os.path.isdir(directory):
         try:
             file_list = os.listdir(directory)
-        except Exception as e:
+        except Exception:
             raise IOError('Cannot get directory listing')
     else:
         raise IOError(directory + ' is not a directory')
@@ -73,7 +73,7 @@ def list_directory(directory='.', skip_directories=True):
     return output_list
 
 
-def list_directories(directory_list=['.'], skip_directories=True):
+def list_directories(directory_list=None, skip_directories=True):
     """
     Return the list of files in a list of directories. The files returned will have the
     corresponding directory name prepended to them so it will be possible to open the file
@@ -85,6 +85,8 @@ def list_directories(directory_list=['.'], skip_directories=True):
     :return: file list
     :rtype: list
     """
+    if directory_list is None:
+        directory_list = ['.']
     file_list = []
     for directory in directory_list:
         try:
@@ -107,12 +109,13 @@ def _callback_test(f, file_name, args):
 
 
 if __name__ == '__main__':
-    # process_file_list(['test1.txt', 'test2.txt', 'diff1.db'], _callback_test)
-    # process_file_list(sys.argv[1:], _callback_test, args)
+    pass
+    # process_file_list(['data'], _callback_test)
+    # process_file_list(sys.argv[1:], _callback_test, None)
     # print list_directory('db_data')
-    print(list_directory('t', skip_directories=True))
-    print(list_directory('t', skip_directories=False))
-    print(list_directories(['t', 'db_data'], skip_directories=True))
-    print(list_directories(['t', 'db_data'], skip_directories=False))
-    # print list_directory('README'))
-    print(list_directories(['README', 't']))
+    # print(list_directory('t', skip_directories=True))
+    # print(list_directory('t', skip_directories=False))
+    # print(list_directories(['t', 'db_data'], skip_directories=True))
+    # print(list_directories(['t', 'db_data'], skip_directories=False))
+    # # print list_directory('README'))
+    # print(list_directories(['README', 't']))
