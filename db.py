@@ -34,10 +34,6 @@ import sys
 import re
 from io import IOBase
 
-# # States used in the next_record() state machine
-# STATE_START = 0  # starting state
-# STATE_RECORD = 1  # found the a record start
-
 # Values passed to tell the user defined filter routine what part of a record is being processed
 FILTER_RECORD = 1
 FILTER_FIELD = 2
@@ -467,7 +463,7 @@ class EpicsRecord:
 
     def write_sorted_record(self, reverse=False, f_out=sys.stdout):
         """
-        Print sorted record. The fields are sorted.
+        Print sorted record. The fields are sorted by name.
         The sort order can be specified.
         :param reverse: reverse sort order?
         :type reverse: bool
