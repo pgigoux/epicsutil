@@ -1,13 +1,13 @@
 #!/usr/bin/python
 import sys
-from argparse import ArgumentParser, SUPPRESS
+from argparse import ArgumentParser, SUPPRESS, Namespace
 from sch import SchematicFiles
 
 # Variable used to control debug output
 debug_flag = True
 
 
-def print_tree(sfo, top_schematics=[]):
+def print_tree(sfo, top_schematics=None):
     """
     Print top level tree starting at the specified schematic.
     If no schematic is specified the list of not referenced schematics will be used.
@@ -19,6 +19,8 @@ def print_tree(sfo, top_schematics=[]):
     :type top_schematics: list
     :return: None
     """
+    if top_schematics is None:
+        top_schematics = []
     sch_list = top_schematics if top_schematics else sfo.get_not_referenced()
     for sch_name in sch_list:
         sch_name = sch_name.replace('.sch', '')
