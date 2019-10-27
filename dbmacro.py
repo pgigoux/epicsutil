@@ -103,7 +103,7 @@ def get_args(argv):
                         action='store_true',
                         dest='undefined',
                         default=False,
-                        help='automatically add ",undefined" macros to the macros to subtitute')
+                        help='automatically add ",undefined" macros to the macros to substitute')
 
     parser.add_argument('--debug',
                         action='store_true',
