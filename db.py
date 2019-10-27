@@ -480,12 +480,11 @@ class EpicsRecord:
 
 
 class EpicsMacro:
-
     # Regular expression used to match a record reference.
     # It's not as general as should be, but's good enough for what we want.
     # The comma is allowed in macro names to cope with the syntax
     # $(name,undefined) when macros are undefined.
-    MACRO_SEARCH_REGEXP = r'\$\([a-zA-Z0-9_,]+\)|\$\{[a-zA-Z0-9_]+\}'
+    MACRO_SEARCH_REGEXP = r'\$\([a-zA-Z0-9_,]+\)|\$\{[a-zA-Z0-9_,]+\}'
 
     UNDEFINED_SUFFIX = ',undefined'
 
@@ -541,13 +540,15 @@ class EpicsMacro:
         :type report_undefined: bool
         :return:
         """
+        # print('line: ' + line)
         # Look for matches only if there are macros in the dictionary
         if self.macro_dictionary:
             match_list = self.pattern.finditer(line)
             for match in match_list:
-
+                # print('group: ' + match.group(), match.start(), match.end())
                 # Extract macro name
                 macro_name = self._cleaned_macro(match.group())
+                # print('macro_name: ' + macro_name)
 
                 # Replace macro with value from the dictionary
                 if macro_name in self.macro_dictionary:
@@ -581,6 +582,13 @@ def test_filter(what, name, attribute):
 
 
 if __name__ == '__main__':
+
+    m = EpicsMacro([('top', 'tcs'), ('dev', 'motor')], add_undefined=True)
+    print(m.replace_macros('This is the $(top,undefined) and ${top}'))
+    print(m.macro_dictionary)
+    # print(m)
+
+    exit(0)
 
     df1 = DatabaseFile(file_name='db_data/append1.db')
     df2 = DatabaseFile(file_name='db_data/append2.db')
