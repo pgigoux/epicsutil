@@ -10,10 +10,6 @@ def test_constructor():
         DatabaseFile(file_name='idonotexist.db')
     except FileNotFoundError:
         pass
-    try:
-        DatabaseFile(file_name='idonotexist.db')
-    except FileNotFoundError:
-        pass
 
 
 def test_extract_name_and_type():
@@ -30,4 +26,4 @@ def test_extract_name_and_type():
 
 
 if __name__ == '__main__':
-    test_extract_name_and_type()
+    pass
