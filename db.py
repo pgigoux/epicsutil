@@ -592,15 +592,6 @@ if __name__ == '__main__':
     f.close()
     exit(1)
 
-    # input_line = 'This is a $(top)$(dev)mon_$(sys) blah'
-    # m = EpicsMacro([('top', 'tcs:'), ('dev', 'cr:'), ('sys', 'gacq')], add_undefined=True)
-    # m = EpicsMacro([], add_undefined=True)
-    # try:
-    #     print m.replace_macros(input_line, report_undefined=True)
-    # except KeyError as e:
-    #     print e
-    # exit(0)
-
     f_test = open('test_data/crtop_rtems.db', 'r')
 
     df = DatabaseFile(f_test, filter_function=test_filter)
