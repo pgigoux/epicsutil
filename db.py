@@ -499,7 +499,7 @@ class EpicsMacro:
         self.pattern = re.compile(self.MACRO_SEARCH_REGEXP)
         self.macro_dictionary = {}
         for t in macro_list:
-            # print '-', t[0], t[1]
+            # print(t)
             self.macro_dictionary[t[0]] = t[1]
             if add_undefined:
                 self.macro_dictionary[t[0] + self.UNDEFINED_SUFFIX] = t[1]
@@ -523,13 +523,14 @@ class EpicsMacro:
     def get_macros(self, line):
         """
         Get macros found in a line with dollar signs or parenthesis removed.
+        Duplicate entries are removed.
         :param line: input line
         :type line: str
-        :return: list of macros
-        :rtype: list
+        :return: set of macros
+        :rtype: set
         """
         match_list = self.pattern.finditer(line)
-        return [self._cleaned_macro(m.group()) for m in match_list]
+        return set([self._cleaned_macro(m.group()) for m in match_list])
 
     def replace_macros(self, line, report_undefined=True):
         """

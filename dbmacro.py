@@ -56,7 +56,7 @@ def list_macros(f, file_name, p_args):
     # Look for macros in all lines
     output_set = set()
     for line in f:
-        output_set |= set(m.get_macros(line.rstrip()))
+        output_set |= m.get_macros(line.rstrip())
 
     # Print the output set
     for macro_name in output_set:
