@@ -99,7 +99,6 @@ class DatabaseFile:
         :param filter_function: function used to filter record names and fields
         :type filter_function: func
         """
-        # TODO review class parameters to make them less ambiguous
         if isinstance(f_in, IOBase):
             self.f = f_in
         else:
@@ -380,8 +379,17 @@ class EpicsRecord:
     """
 
     def __init__(self, record_name, record_type):
-        self.name = record_name
-        self.type = record_type
+        """
+        :param record_name: record name
+        :type record_name: str
+        :param record_type: record type
+        :type record_type: str
+        """
+        if isinstance(record_name, str) and isinstance(record_type, str):
+            self.name = record_name
+            self.type = record_type
+        else:
+            raise TypeError('the record name and type must be strings')
         self.field_names = []
         self.field_values = {}
 
