@@ -82,11 +82,10 @@ def test_record_count(epics_database):
 
 def test_append_1(epics_database, larger_epics_database):
     """
-    :param epics_database:
+    :param epics_database: epics database object
     :type epics_database: EpicsDatabase
-    :param larger_epics_database:
+    :param larger_epics_database: epics database object (larger database)
     :type larger_epics_database: EpicsDatabase
-    :return:
     """
     assert (isinstance(epics_database, EpicsDatabase))
     assert (isinstance(larger_epics_database, EpicsDatabase))
@@ -98,11 +97,10 @@ def test_append_1(epics_database, larger_epics_database):
 
 def test_append_2(epics_database, larger_epics_database):
     """
-    :param epics_database:
+    :param epics_database: epics database object
     :type epics_database: EpicsDatabase
-    :param larger_epics_database:
+    :param larger_epics_database: epics database object (larger database)
     :type larger_epics_database: EpicsDatabase
-    :return:
     """
     assert (isinstance(epics_database, EpicsDatabase))
     epics_database.append(larger_epics_database)
@@ -116,9 +114,8 @@ def test_append_2(epics_database, larger_epics_database):
 
 def test_append_3(epics_database):
     """
-    :param epics_database:
+    :param epics_database: epics database object
     :type epics_database: EpicsDatabase
-    :return:
     """
     assert (isinstance(epics_database, EpicsDatabase))
     epics_database.append(epics_database)

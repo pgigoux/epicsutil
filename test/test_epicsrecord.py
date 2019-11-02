@@ -23,16 +23,6 @@ def epics_record():
     return record
 
 
-@pytest.fixture()
-def single_record():
-    return SINGLE_RECORD
-
-
-@pytest.fixture()
-def sorted_record():
-    return SORTED_RECORD
-
-
 def test_constructor():
     try:
         EpicsRecord()
@@ -157,21 +147,21 @@ def test_add_field():
     assert (record.get_fields() == [('field1', 'value1'), ('field2', 'value2')])
 
 
-def test_write_record(epics_record, single_record, tmp_path):
+def test_write_record(epics_record, tmp_path):
     output_file_name = os.path.join(str(tmp_path), 'output.db')
     f = open(output_file_name, 'w')
     epics_record.write_record(f_out=f)
     f.close()
-    assert (filecmp.cmp(output_file_name, single_record))
+    assert (filecmp.cmp(output_file_name, SINGLE_RECORD))
     shutil.rmtree(str(tmp_path), ignore_errors=True)
 
 
-def test_write_sorted_record(epics_record, sorted_record, tmp_path):
+def test_write_sorted_record(epics_record, tmp_path):
     output_file_name = os.path.join(str(tmp_path), 'sorted.db')
     f = open(output_file_name, 'w')
     epics_record.write_sorted_record(f_out=f)
     f.close()
-    assert (filecmp.cmp(output_file_name, sorted_record))
+    assert (filecmp.cmp(output_file_name, SORTED_RECORD))
     shutil.rmtree(str(tmp_path), ignore_errors=True)
 
 
