@@ -1,9 +1,12 @@
 import os
 import pytest
+import shutil
+import filecmp
 from db import DatabaseFile, EpicsDatabase, EpicsRecord
 
-# Database file name used in this test
+# Database file names used in this test
 SIMPLE_DATABASE = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'simple.db')
+SORTED_DATABASE = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'simple_sorted.db')
 LARGER_DATABASE = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'larger.db')
 
 
@@ -120,6 +123,38 @@ def test_append_3(epics_database):
     assert (isinstance(epics_database, EpicsDatabase))
     epics_database.append(epics_database)
     assert (epics_database.record_count() == 3)
+
+
+def test_write_database(epics_database, tmp_path):
+    """
+    :param epics_database: epics database object
+    :type epics_database: EpicsDatabase
+    :param tmp_path:
+    :type tmp_path:
+    :return:
+    """
+    output_file_name = os.path.join(str(tmp_path), 'output.db')
+    f = open(output_file_name, 'w')
+    epics_database.write_database(f_out=f)
+    f.close()
+    assert (filecmp.cmp(output_file_name, SIMPLE_DATABASE))
+    shutil.rmtree(str(tmp_path), ignore_errors=True)
+
+
+def test_write_sorted_database(epics_database, tmp_path):
+    """
+    :param epics_database: epics database object
+    :type epics_database: EpicsDatabase
+    :param tmp_path:
+    :type tmp_path:
+    :return:
+    """
+    output_file_name = os.path.join(str(tmp_path), 'output.db')
+    f = open(output_file_name, 'w')
+    epics_database.write_sorted_database(f_out=f)
+    f.close()
+    assert (filecmp.cmp(output_file_name, SORTED_DATABASE))
+    shutil.rmtree(str(tmp_path), ignore_errors=True)
 
 
 if __name__ == '__main__':
