@@ -1,6 +1,12 @@
 import os
 import pytest
+import filecmp
+import shutil
 from db import DatabaseFile, EpicsRecord
+
+# Database file names used in this test
+SINGLE_RECORD = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'single.db')
+SORTED_RECORD = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'single_sorted.db')
 
 
 @pytest.fixture
@@ -10,12 +16,21 @@ def epics_record():
     :return: epics record
     :rtype: EpicsRecord
     """
-    file_name = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'single.db')
-    df = DatabaseFile(file_name=file_name)
+    df = DatabaseFile(file_name=SINGLE_RECORD)
     record = None
     for record in df.next_record():
         break
     return record
+
+
+@pytest.fixture()
+def single_record():
+    return SINGLE_RECORD
+
+
+@pytest.fixture()
+def sorted_record():
+    return SORTED_RECORD
 
 
 def test_constructor():
@@ -110,7 +125,7 @@ def test_get_field_value_2(epics_record):
 
 def test_get_fields_1():
     record = EpicsRecord('my_name', 'my_type')
-    assert(record.get_fields() == [])
+    assert (record.get_fields() == [])
 
 
 def test_get_fields_2(epics_record):
@@ -140,3 +155,21 @@ def test_add_field():
     assert (record.get_field_value('field1') == 'value1')
     assert (record.get_field_value('field2') == 'value2')
     assert (record.get_fields() == [('field1', 'value1'), ('field2', 'value2')])
+
+
+def test_write_record(epics_record, single_record, tmp_path):
+    output_file_name = os.path.join(str(tmp_path), 'output.db')
+    f = open(output_file_name, 'w')
+    epics_record.write_record(f_out=f)
+    f.close()
+    assert (filecmp.cmp(output_file_name, single_record))
+    shutil.rmtree(str(tmp_path), ignore_errors=True)
+
+
+def test_write_sorted_record(epics_record, sorted_record, tmp_path):
+    output_file_name = os.path.join(str(tmp_path), 'sorted.db')
+    f = open(output_file_name, 'w')
+    epics_record.write_sorted_record(f_out=f)
+    f.close()
+    assert (filecmp.cmp(output_file_name, sorted_record))
+    shutil.rmtree(str(tmp_path), ignore_errors=True)

@@ -2,6 +2,9 @@ import os
 import pytest
 from db import DatabaseFile, EpicsDatabase, EpicsRecord
 
+# Database file name used in this test
+SIMPLE_DATABASE = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'simple.db')
+
 
 @pytest.fixture
 def file_object():
@@ -9,8 +12,7 @@ def file_object():
     Fixture used to return a valid file object
     :return: file object from open()
     """
-    file_name = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'simple.db')
-    return open(file_name, 'r')
+    return open(SIMPLE_DATABASE, 'r')
 
 
 @pytest.fixture
@@ -20,8 +22,7 @@ def database_file():
     :return: database file
     :rtype: DatabaseFile
     """
-    file_name = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', 'db', 'simple.db')
-    return DatabaseFile(file_name=file_name)
+    return DatabaseFile(file_name=SIMPLE_DATABASE)
 
 
 def test_constructor(file_object):

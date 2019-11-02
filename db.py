@@ -348,6 +348,7 @@ class EpicsDatabase:
     def write_database(self, f_out=sys.stdout):
         """
         Print the database in the same format as in the database file.
+        The file is not closed to allow writing (appending) databases to a single file.
         The order of the records is preserved.
         :param f_out: output file object
         :type f_out: file
@@ -360,6 +361,7 @@ class EpicsDatabase:
     def write_sorted_database(self, reverse=False, f_out=sys.stdout):
         """
         Print the database sorted by record name. It also sorts the fields in each record.
+        The file is not closed to allow writing (appending) databases to a single file.
         The sorting order can be specified.
         :param reverse: reverse sort order?
         :type reverse: bool
@@ -453,6 +455,7 @@ class EpicsRecord:
     def write_record(self, f_out=sys.stdout):
         """
         Print record in the same format as it would appear in the file.
+        The file is not closed to allow writing more than one record to the same file.
         The order of the fields is preserved.
         :param f_out: output file object
         :type f_out: file
@@ -466,6 +469,7 @@ class EpicsRecord:
     def write_sorted_record(self, reverse=False, f_out=sys.stdout):
         """
         Print sorted record. The fields are sorted by name.
+        The file is not closed to allow writing more than one record to the same file.
         The sort order can be specified.
         :param reverse: reverse sort order?
         :type reverse: bool
