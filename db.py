@@ -586,54 +586,53 @@ def test_filter(what, name, attribute):
 
 
 if __name__ == '__main__':
-
-    m = EpicsMacro([('top', 'tcs'), ('dev', 'motor')], add_undefined=True)
-    print(m.replace_macros('This is the $(top,undefined) and ${top}'))
-    print(m.macro_dictionary)
-    # print(m)
-
-    exit(0)
-
-    df1 = DatabaseFile(file_name='db_data/append1.db')
-    df2 = DatabaseFile(file_name='db_data/append2.db')
-    db1 = df1.read_database()
-    db2 = df2.read_database()
-    db1.append(db2)
-    f = open('junk.db', 'w')
-    db1.write_database(f_out=f)
-    f.close()
-    exit(1)
-
-    f_test = open('test_data/crtop_rtems.db', 'r')
-
-    df = DatabaseFile(f_test, filter_function=test_filter)
-
-    for r in df.next_record():
-        assert (isinstance(r, EpicsRecord))
-        print('--- [' + r.get_name() + '] [' + r.get_type() + ']')
-        # print r.get_fields()
-        r.write_record()
-
-    # df = DatabaseFile(file_name='data/diff1.db')
-
-    df.close()
-    exit(0)
-
-    db3 = df.read_database()
-
-    # f = open('out4.db', 'w')
-    f = sys.stdout
-    db3.write_database(f_out=f)
-    # db.write_sorted_database(f=f)
-    # f.close()
-    # db.write_sorted_database(reverse=True)
-    exit(0)
-
-    # for r in df.next_record():
-    #     db.add_record(r)
+    # m = EpicsMacro([('top', 'tcs'), ('dev', 'motor')], add_undefined=True)
+    # print(m.replace_macros('This is the $(top,undefined) and ${top}'))
+    # print(m.macro_dictionary)
+    # # print(m)
     #
-    # db.print_database()
-    # print '-----------------------------------------------------------'
-    # db.write_sorted_database(reverse=True)
+    # exit(0)
+    #
+    # df1 = DatabaseFile(file_name='db_data/larger.db')
+    # df2 = DatabaseFile(file_name='db_data/append2.db')
+    # db1 = df1.read_database()
+    # db2 = df2.read_database()
+    # db1.append(db2)
+    # f = open('junk.db', 'w')
+    # db1.write_database(f_out=f)
+    # f.close()
+    # exit(1)
+    #
+    # f_test = open('test_data/crtop_rtems.db', 'r')
+    #
+    # df = DatabaseFile(f_test, filter_function=test_filter)
+    #
+    # for r in df.next_record():
+    #     assert (isinstance(r, EpicsRecord))
+    #     print('--- [' + r.get_name() + '] [' + r.get_type() + ']')
+    #     # print r.get_fields()
+    #     r.write_record()
+    #
+    # # df = DatabaseFile(file_name='data/diff1.db')
+    #
+    # df.close()
+    # exit(0)
+    #
+    # db3 = df.read_database()
+    #
+    # # f = open('out4.db', 'w')
+    # f = sys.stdout
+    # db3.write_database(f_out=f)
+    # # db.write_sorted_database(f=f)
+    # # f.close()
+    # # db.write_sorted_database(reverse=True)
+    # exit(0)
+    #
+    # # for r in df.next_record():
+    # #     db.add_record(r)
+    # #
+    # # db.print_database()
+    # # print '-----------------------------------------------------------'
+    # # db.write_sorted_database(reverse=True)
 
     exit(0)
