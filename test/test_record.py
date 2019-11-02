@@ -51,7 +51,7 @@ def test_get_field_names(database_file):
     assert (sorted(record.get_field_names()) == ['ADEL', 'AOFF', 'ASLO', 'DESC', 'DISS', 'DISV', 'DTYP', 'EGU',
                                                  'EGUF', 'EGUL', 'EVNT', 'FLNK', 'HHSV', 'HIGH', 'HIHI', 'HOPR',
                                                  'HSV', 'HYST', 'INP', 'LINR', 'LLSV', 'LOLO', 'LOPR', 'LOW',
-                                                 'LSV', 'MDEL', 'PHAS','PINI', 'PREC', 'PRIO', 'SCAN', 'SDIS',
+                                                 'LSV', 'MDEL', 'PHAS', 'PINI', 'PREC', 'PRIO', 'SCAN', 'SDIS',
                                                  'SIML', 'SIMS', 'SIOL', 'SMOO'])
 
 
@@ -64,7 +64,7 @@ def test_get_field_value(database_file):
     assert (record.get_field_value('PINI') == 'NO')
     assert (record.get_field_value('PHAS') == '0')
     assert (record.get_field_value('EVNT') == '0')
-    assert (record.get_field_value('DTYP') ==  'Analog I/O')
+    assert (record.get_field_value('DTYP') == 'Analog I/O')
     assert (record.get_field_value('DISV') == '1')
     assert (record.get_field_value('SDIS') == '0.000000000000000e+00')
     assert (record.get_field_value('DISS') == 'NO_ALARM')
@@ -84,8 +84,8 @@ def test_get_field_value(database_file):
     assert (record.get_field_value('HIHI') == '90.0')
     assert (record.get_field_value('LOLO') == '0.0')
     assert (record.get_field_value('HIGH') == '60.0')
-    assert (record.get_field_value('LOW') =='0.0')
-    assert (record.get_field_value('HHSV') =='MAJOR')
+    assert (record.get_field_value('LOW') == '0.0')
+    assert (record.get_field_value('HHSV') == 'MAJOR')
     assert (record.get_field_value('LLSV') == 'NO_ALARM')
     assert (record.get_field_value('HSV') == 'MINOR')
     assert (record.get_field_value('LSV') == 'NO_ALARM')
