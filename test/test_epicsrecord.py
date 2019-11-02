@@ -173,3 +173,7 @@ def test_write_sorted_record(epics_record, sorted_record, tmp_path):
     f.close()
     assert (filecmp.cmp(output_file_name, sorted_record))
     shutil.rmtree(str(tmp_path), ignore_errors=True)
+
+
+if __name__ == '__main__':
+    pass
