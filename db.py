@@ -461,9 +461,7 @@ class EpicsRecord:
         """
         f_out.write(format_record_start(self.name, self.type) + '\n')
         for field_name in self.field_names:
-            # print '    field({0:s}, {1:s})'.format(field_name, self.field_values[field_name])
             f_out.write(format_field(field_name, self.field_values[field_name]) + '\n')
-        # print '}'
         f_out.write(format_record_end() + '\n')
 
     def write_sorted_record(self, reverse=False, f_out=sys.stdout):
@@ -478,9 +476,7 @@ class EpicsRecord:
         """
         f_out.write(format_record_start(self.name, self.type) + '\n')
         for field_name in sorted(self.field_names, reverse=reverse):
-            # print '    field({0:s}, {1:s})'.format(field_name, self.field_values[field_name])
             f_out.write(format_field(field_name, self.field_values[field_name]) + '\n')
-        # print '}'
         f_out.write(format_record_end() + '\n')
 
 
