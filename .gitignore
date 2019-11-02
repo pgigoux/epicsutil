@@ -1,6 +1,10 @@
 .DS_Store
 .idea
 .pytest_cache
+.gitignore.swp
 __pycache__
-data
+*.pyc
+*.pyo
 old
+data
+!test/data
