@@ -327,7 +327,6 @@ class EpicsDatabase:
     def get_record(self, record_name):
         """
         Return the record matching a record name.
-        They are returned in the same order as they appear in the database file.
         :param record_name: record name
         :type record_name: EpicsRecord
         :return: record, or None if the record is not in the database
