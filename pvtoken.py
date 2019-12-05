@@ -25,7 +25,7 @@ class PvToken:
         """
         Return the token value
         :return: token value
-        :rtype:
+        :rtype: str
         """
         return str(self.value)
 

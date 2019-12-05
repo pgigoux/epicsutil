@@ -3,6 +3,7 @@ File handling routines.
 """
 import sys
 import os
+from argparse import Namespace
 
 
 def process_file_list(file_list, func, args=None):
@@ -18,7 +19,6 @@ def process_file_list(file_list, func, args=None):
     :type func: function
     :param args: command line arguments
     :type args: Namespace
-    :return: None
     """
     # print 'process_file_list', file_list
     if len(file_list):
@@ -101,9 +101,11 @@ def _callback_test(f, file_name, args):
     """
     Callback function used to test process_file_list
     :param f: file handle
+    :type f: file
     :param file_name: file name
+    :type file_name: str
     :param args: list with command line arguments
-    :return:
+    :type args: Namespace
     """
     print('test callback', f, file_name, args)
 

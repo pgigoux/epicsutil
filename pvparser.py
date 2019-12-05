@@ -218,7 +218,6 @@ class PvParser:
     def check_single(self):
         """
         Check for single statement consistency.
-        :return: None
         """
         # Check for array consistency
         if self.single_count != len(self.single_value_list):
@@ -320,7 +319,6 @@ class PvParser:
         Used extensively during the implementation and testing of the parser.
         Trace is enabled at object creation time.
         :param text: text to print
-        :return: None
         """
         if self.debug:
             print('> ' + text, self.token)
@@ -347,7 +345,6 @@ class PvParser:
         """
         Clear the latest token read (marked it as consumed). This will force get_token()
         to read a new token from the lexer the next time is called.
-        :return:
         """
         self.trace('flush_token')
         self.token = PvToken(TOKEN_NONE, 'none')
@@ -382,7 +379,7 @@ class PvParser:
         ---
         :param input_file_name: input file name
         :type input_file_name: str
-        :return: file found?
+        :return: True if file found, False otherwise
         :rtype: bool
         """
         self.trace('pv_file')
@@ -417,7 +414,7 @@ class PvParser:
 
     def pv_item(self):
         """
-        An item is a group stamenet, a single statement or a sleep statement.
+        An item is a group statement, a single statement or a sleep statement.
         ---
         item
             : group
@@ -425,8 +422,9 @@ class PvParser:
             | sleep
             ;
         ---
-        :return:
+        :return: True if group, single or sleep. Otherwise, raise exception.
         :rtype: bool
+        :raises: PvSyntaxError
         """
         self.trace('pv_item')
         if self.pv_group():
@@ -451,8 +449,9 @@ class PvParser:
         group: group_head TOKEN_LEFT_BRACE group_body TOKEN_RIGHT_BRACE group_tail
             ;
         ---
-        :return:
+        :return: True if group found, False otherwise.
         :rtype: bool
+        :raises: PvSyntaxError
         """
         self.trace('pv_group')
         if self.pv_group_head():
@@ -477,7 +476,8 @@ class PvParser:
             :	TOKEN_GROUP
             ;
         ---
-        :return: true if start of group found, false otherwise
+        :return: True if start of group found, False otherwise
+        :rtype: bool
         """
         self.trace('pv_group_head')
         if self.get_token().match(TOKEN_GROUP):
@@ -496,7 +496,8 @@ class PvParser:
         | /* empty */
         ;
         ---
-        :return:
+        :return: Always true
+        :rtype: bool
         """
         self.trace('pv_group_body')
         while self.pv_single():
@@ -512,7 +513,6 @@ class PvParser:
             |	/* empty */
             ;
         ---
-        :return:
         """
         self.trace('pv_group_tail')
         if self.get_token().match(TOKEN_SEMICOLON):
@@ -533,7 +533,7 @@ class PvParser:
             | TOKEN_SLEEP TOKEN_DOUBLE TOKEN_SEMICOLON
             ;
         ---
-        :return: true if a sleep statement was found, false otherwise
+        :return: True if a sleep statement was found, False otherwise
         :rtype: bool
         :raises: PvSyntaxError
         """
@@ -564,7 +564,8 @@ class PvParser:
         single
             : single_head single_equals single_body TOKEN_SEMICOLON
         ---
-        :return:
+        :return: True if single statement, False otherwise
+        :rtype: bool
         """
         self.trace('pv_single')
         self.clear_single()
@@ -591,7 +592,7 @@ class PvParser:
             :	single_start single_type single_name single_count
             ;
         ---
-        :return: true if valid head
+        :return: True if valid head
         :rtype: bool
         :raises: PvSyntaxError
         """
@@ -642,7 +643,7 @@ class PvParser:
             :	tokenPVNAME
             ;
         ---
-        :return: true if name detected
+        :return: True if name detected, False otherwise
         :raises: PvSyntaxError
         """
         self.trace('pv_single_name')
@@ -663,7 +664,7 @@ class PvParser:
             | /* empty */
             ;
         ---
-        :return: true if count detected, false otherwise
+        :return: Always True
         :raises: PvSyntaxError
         """
         self.trace('pv_single_count')
@@ -682,7 +683,7 @@ class PvParser:
         single_equals
             : TOKEN_EQUALS
         ---
-        :return: true if equals detected
+        :return: True if equals detected, else raise exception
         :raises: PvSyntaxError
         """
         self.trace('pv_single_equals')
@@ -708,7 +709,8 @@ class PvParser:
             | TOKEN_LEFT_BRACE single_body_value_list TOKEN_RIGHT_BRACE
             ;
         ---
-        :return:
+        :return: True if single body
+        :rtype: bool
         """
         self.trace('pv_single_body')
         if self.get_token().match(TOKEN_LEFT_BRACE):
@@ -731,6 +733,8 @@ class PvParser:
             | single_value_list TOKEN_COMMA single_individual_value
             ;
         ---
+        :return: Always true
+        :rtype: bool
         """
         self.trace('pv_single_value_list')
         while True:
@@ -756,7 +760,7 @@ class PvParser:
             : single_index single_value single_scale
             ;
         ---
-        :return: true if individual value is found, exception otherwise
+        :return: True if individual value is found, exception otherwise
         :rtype: bool
         :raises: PvSyntaxError
         """
@@ -791,7 +795,7 @@ class PvParser:
             |	tokenSTRING
             ;
         ---
-        :return: true if value found, exception otherwise
+        :return: True if value found, exception otherwise
         :rtype: bool
         :raises: PvSyntaxError
         """

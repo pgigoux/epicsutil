@@ -5,7 +5,7 @@ from pvparser import PvParser
 
 if __name__ == '__main__':
     """
-    Entry point for the pvload file check program.
+    Entry point for the pvload check program.
     """
 
     # Command line arguments

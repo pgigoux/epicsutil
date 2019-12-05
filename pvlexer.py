@@ -164,7 +164,6 @@ class PvLexer:
         """
         Throw away the list of token that are buffered to force reading a new line.
         This routine is intended to recover from a syntax error and continue parsing.
-        :return:
         """
         self.token_list = []
 
