@@ -50,27 +50,54 @@ class SchematicFiles:
     def get_symbols(self):
         """
         Return the list of all the symbol files found (without the .sym extension)
-        :return:
+        :return: symbol list
+        :rtype: list
         """
         return self.sym_list
 
     def get_children(self, sch_name):
+        """
+        Get the list (set) of schematics that are referenced in one schematic.
+        :param sch_name: schematic name
+        :type sch_name: str
+        :return: list of children
+        :rtype: set
+        """
         return self.children_dict[sch_name]
 
     def get_parent(self, sch_name):
+        """
+        Return the list (set) of schematics that reference a given schematic.
+        :param sch_name: schematic name
+        :type sch_name: str
+        :return: list of parent schematics
+        :rtype: set
+        """
         return self.parent_dict[sch_name]
 
     def get_not_referenced(self):
+        """
+        Return the list of schematics that are not referenced by other schematics.
+        :return: list of schematics
+        :rtype: list
+        """
         return self.not_referenced
 
     def get_not_used(self):
+        """
+        Return the list of schematics that are not referenced by other schematics and
+        that do not reference other schematics.
+        :return: list of schematics
+        :rtype: list
+        """
         return self.not_used
 
     def _is_sym(self, sym):
         """
         Check whether a given symbol is in the symbol list.
         :param sym: symbol name
-        :return:
+        :return: True if the symbol is in the symbol list, False otherwise.
+        :rtype: bool
         """
         return sym in self.sym_list
 
@@ -78,7 +105,8 @@ class SchematicFiles:
         """
         Return the list of schematics that are not referenced by any other schematic.
         This happens in top level schematics or schematics that are not used.
-        :return:
+        :return: list of schematics
+        :rtype: list
         """
         return [s for s in self.sch_dict if s not in self.sym_list]
 
@@ -87,7 +115,8 @@ class SchematicFiles:
         Return the list of schematics that are not used, i.e. not referenced in any other
         schematic and not referencing any schematic.
         Should be run after _get_not_referenced.
-        :return:
+        :return: list of schematics
+        :rtype: list
         """
         return [s for s in self.not_referenced if len(self.children_dict[s]) == 0]
 
@@ -97,7 +126,6 @@ class SchematicFiles:
         directory specified when the schematic list object was created.
         The dictionaries are indexed by schematic/symbol name and the value is
         the full file name of the schematic/symbol file.
-        :return: None
         """
         # Loop over all files in the directory.
         # Enter in the schematic dictionary or the symbol list depending whether
@@ -125,7 +153,9 @@ class SchematicFiles:
         (i.e. references to non existent symbols or standard EPICS symbols are ignored).
         :param sch_file: schematic name
         :return: reference set
+        :rtype: set
         """
+        # TODO: refactor exception handling
         file_name = self.sch_dict[sch_file]
         references = set()
         try:
@@ -157,8 +187,7 @@ class SchematicFiles:
 
     def dump(self):
         """
-        Print SchematicList object. Debugging only.
-        :return:
+        Print SchematicList object. For debugging only.
         """
         print('directory', self.directory)
         print('sch', len(self.sch_dict), self.sch_dict)
