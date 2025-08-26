@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Sort records and fields in a list of database files.
 Each file is sorted separately. Fields are sorted within each record.

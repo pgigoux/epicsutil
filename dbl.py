@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 This program replicates the behaviour of the dbl command in EPICS.
 It takes a list of input files and lists the records in each file.

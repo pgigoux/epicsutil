@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Extract state set and state information from an SNL file and print it in different formats.
 Two output formats are supported: plain text and the dot graph description_language.

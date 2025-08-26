@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import sys
 from argparse import ArgumentParser, SUPPRESS
 from pvparser import PvParser

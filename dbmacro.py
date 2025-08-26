@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 This program is used to list or replace macro references in a database file
 The standard input is used if no files are specified.

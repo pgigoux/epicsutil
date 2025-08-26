@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Print the difference between two database files.
 It checks for the following possible differences:
