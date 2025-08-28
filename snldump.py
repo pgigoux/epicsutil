@@ -15,6 +15,11 @@ DIGRAPH_INDENT = ' ' * 4
 debug_flag = False
 
 
+def print_state_set_list(state_set_list: list):
+    for s in state_set_list:
+        s.dump()
+
+
 class StateSet:
     """
     Class used to represent a state set object.
@@ -30,6 +35,11 @@ class StateSet:
 
     def __str__(self):
         return self.name + ': ' + str(len(self.state_list)) + ' ' + str(self.state_list)
+
+    def dump(self):
+        print('StateSet', self.name, len(self.state_list))
+        for s in self.state_list:
+            print(s)
 
     def add_state(self, state):
         """
@@ -92,8 +102,8 @@ class State:
 
     def get_name(self):
         """
-        Get the state name
-        :return: state name
+        Get the name of the state
+        :return: name
         :rtype: str
         """
         return self.name
@@ -133,7 +143,7 @@ def parse_file(f_in):
             continue
 
         # Check for a state set declaration.
-        # Should be of the for 'ss <state_set_name> {'
+        # Should be of the form 'ss <state_set_name> {'
         # The closing brace (}) is not always in the same line.
         if re.search('^ss .*', line):  # state set
 
@@ -185,7 +195,7 @@ def parse_file(f_in):
                 print('skipped what it seems an incomplete state reference', line)
                 continue
             reference_name = tmp[2]
-
+            print('--', reference_name)
             if debug_flag:
                 print('REF', reference_name, tmp)
 
@@ -212,7 +222,7 @@ def parse_file(f_in):
 
 def print_as_text(state_set_list):
     """
-    Print a state set list to the standar output as a text.
+    Print a state set list to the standard output as a text.
     :param state_set_list: list of StateSet objects
     :type state_set_list: list
     :return: None
@@ -230,34 +240,9 @@ def print_as_text(state_set_list):
         print()
 
 
-def write_as_digraph(f_out, state_set_list):
-    """
-    Write the state set list to the an output file as a DOT digraph.
-    This routine is not used in the program anymore, but was left here just in case.
-    :param f_out: output file object
-    :type f_out: file
-    :param state_set_list: list of StateSet objects
-    :type state_set_list: list
-    :return:
-    """
-    f_out.write('digraph G {\n')
-
-    for state_set in state_set_list:
-        assert isinstance(state_set, StateSet)
-        for state in state_set.get_state_list():
-            assert isinstance(state, State)
-            f_out.write(DIGRAPH_INDENT + state_set.get_name() + ' -> ' + state.get_name() + ';\n')
-            for reference in state.reference_list:
-                f_out.write(DIGRAPH_INDENT + state.get_name() + ' -> ' + reference + ';\n')
-
-    f_out.write('}\n')
-
-    return
-
-
 def print_as_digraph(state_set_list):
     """
-    Print the state set list to the standar output as a DOT digraph.
+    Print the state set list to the standard output as a DOT digraph.
     :param state_set_list: list of StateSet objects
     :type state_set_list: list
     :return: None
@@ -265,13 +250,16 @@ def print_as_digraph(state_set_list):
     print('digraph G {')
 
     for state_set in state_set_list:
+        first = True
         assert isinstance(state_set, StateSet)
+        print(DIGRAPH_INDENT + state_set.get_name() + ' [shape=box];')
         for state in state_set.get_state_list():
             assert isinstance(state, State)
-            print(DIGRAPH_INDENT + state_set.get_name() + ' -> ' + state.get_name() + ';')
+            if first:
+                print(DIGRAPH_INDENT + state_set.get_name() + ' -> ' + state.get_name() + ';')
+                first = False
             for reference in state.reference_list:
                 print(DIGRAPH_INDENT + state.get_name() + ' -> ' + reference + ';')
-
     print('}\n')
 
     return
@@ -306,9 +294,9 @@ def process_input_files(input_file_list):
 def process_file(f, file_name, p_args):
     """
     This is the callback function for process_file_list.
-    Read the database snl file and print it in the selected format.
-    :param f: database file
-    :param file_name: file name (needed, but not used)
+    Read the snl file and print it in the selected format.
+    :param f: input file descriptor
+    :param file_name: input file name (needed, but not used)
     :param p_args: command line arguments (not used)
     :return: None
     """
