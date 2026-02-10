@@ -130,8 +130,8 @@ def print_sorted_dictionary(d):
 def remove_duplicates(input_list):
     """
     Auxiliary routine called by system_to_others to remove entries that have duplicate
-    channel names. Each element in the list is a tuple with three elements.
-    The channel name is the firtst tuple element.
+    entries. Each element in the list is a tuple with five elements:
+    source record, source field, destination record, destination name and destination systems
     :param input_list: list of tuples
     :type input_list: list
     :return: list without duplicate channel names
@@ -139,11 +139,10 @@ def remove_duplicates(input_list):
     """
     temp_list = []
     output_list = []
-    for a, b, c in input_list:
-        if a not in temp_list:
-            output_list.append((a, b, c))
-            temp_list.append(a)
-    # print input_list
+    for a, b, c, d, e in input_list:
+        if (a, b) not in temp_list:
+            output_list.append((a, b, c, d, set(e)))
+            temp_list.append((a, b))
     return output_list
 
 
@@ -189,7 +188,7 @@ def create_index_file(index_file_name, database_list):
     """
     record_name_list = []
     for database_name in database_list:
-        print(database_name)
+        # print(database_name)
 
         # Open database and macro substitution file (if any)
         db = DatabaseFile(file_name=database_name)
@@ -343,9 +342,9 @@ def system_to_others(system, database_directory, channel_dict):
                                             record_name, field_name,
                                             channel_dict[target_record_name]))
 
-    # return remove_duplicates(output_list)
-    # print output_list
-    return output_list
+    return remove_duplicates(output_list)
+    print(output_list)
+    # return output_list
 
 
 def others_to_system(system, sys_list, database_directory, channel_dict):
@@ -430,7 +429,7 @@ def print_system_to_others(system, input_list, include_fields):
     """
     :param system: system name
     :type system: str
-    :param input_list: list of tuples with cross references
+    :param input_list: list of tuples with cross-references
     :type input_list: list
     :param include_fields: include fields in output?
     :type include_fields: bool
